@@ -1,32 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Home</title>
-</head>
-<body>
-    <h1>Welcome to User Home</h1>
+{% extends 'base.html' %}
 
-    <!-- הצגת הודעות -->
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+{% block title %}User Home{% endblock %}
 
-    <!-- כפתור יצירת לקוח -->
-    <form action="{% url 'create_customer' %}" method="get">
-        <button type="submit">Create New Customer</button>
-    </form>
+{% block content %}
+    <div class="content-container">
+        <h1>Welcome to User Home</h1>
 
-    <!-- כפתור חזרה לדף הבית של המשתמש -->
-    <form action="{% url 'home' %}" method="get">
-        <button type="submit">Back To Welcome Page</button>
-    </form>
+        <!-- הצגת הודעות -->
+        {% if messages %}
+            <ul class="message-list">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-</body>
-</html>
+        <!-- כפתור יצירת לקוח -->
+        <div class="button-group">
+            <a href="{% url 'create_customer' %}" class="btn btn-primary">Create New Customer</a>
+        </div>
 
+        <!-- כפתור חזרה לדף הבית של המשתמש -->
+        <div class="button-group">
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back To Welcome Page</a>
+        </div>
+    </div>
+{% endblock %}

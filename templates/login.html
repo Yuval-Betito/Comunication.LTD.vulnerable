@@ -1,39 +1,32 @@
-<!-- templates/login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form method="POST">
-        {% csrf_token %}
+{% extends 'base.html' %}
 
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+{% block title %}Login{% endblock %}
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">Login</button>
-    </form>
-
-    <p>
-        <a href="{% url 'forgot_password' %}">Forgot Password?</a>
-    </p>
-
-    <p>
-        <a href="{% url 'home' %}">Back To Welcome Page</a>
-    </p>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</body>
-</html>
+{% block content %}
+    <div class="form-container">
+        <h1>Login</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="button-container">
+                <!-- כפתור Login -->
+                <button type="submit">Login</button>
+                <!-- כפתור Forgot Password -->
+                <a href="{% url 'forgot_password' %}">
+                    <button type="button">Forgot Password?</button>
+                </a>
+                <!-- כפתור Back to Welcome -->
+                <a href="{% url 'home' %}">
+                    <button type="button">Back to Welcome</button>
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

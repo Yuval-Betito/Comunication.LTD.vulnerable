@@ -1,19 +1,16 @@
-<!-- templates/home.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Communication LTD</title>
-</head>
-<body>
-    <h1>Welcome to Communication LTD</h1>
-    <p>To manage your account, click on one of the buttons below:</p>
+{% extends 'base.html' %}
 
-    <!-- Button for Register -->
-    <p><a href="{% url 'register' %}">Register</a></p>
+{% block title %}Welcome to Communication LTD{% endblock %}
 
-    <!-- Button for Login -->
-    <p><a href="{% url 'login' %}">Login</a></p>
-</body>
-</html>
+{% block content %}
+    <div>
+        <!-- כותרת ראשית -->
+        <h1>Welcome to Communication LTD</h1>
+
+        <!-- כפתור Login -->
+        <a href="{% url 'login' %}" class="btn">Login</a>
+
+        <!-- כפתור Register -->
+        <a href="{% url 'register' %}" class="btn">Register</a>
+    </div>
+{% endblock %}
