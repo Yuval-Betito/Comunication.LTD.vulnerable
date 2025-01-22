@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Home</title>
+</head>
+<body>
+    <h1>Welcome to User Home</h1>
+
+    <!-- הצגת הודעות -->
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- כפתור יצירת לקוח -->
+    <form action="{% url 'create_customer' %}" method="get">
+        <button type="submit">Create New Customer</button>
+    </form>
+
+    <!-- כפתור חזרה לדף הבית של המשתמש -->
+    <form action="{% url 'home' %}" method="get">
+        <button type="submit">Back To Welcome Page</button>
+    </form>
+
+</body>
+</html>
+
