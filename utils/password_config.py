@@ -1,5 +1,3 @@
-
-
 PASSWORD_CONFIG = {
     'min_length': 10,
     'complexity': {

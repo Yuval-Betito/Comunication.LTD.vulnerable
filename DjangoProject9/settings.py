@@ -6,8 +6,9 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
-SECRET_KEY = 'django-insecure-c#shm5jvn-sxms#7+e_b@gi3j8(xc75=0i%l+h3a!wh^#=kezo'
+SECRET_KEY = os.getenv('SECRET_KEY')  # עם dotenv
 
 DEBUG = True
 

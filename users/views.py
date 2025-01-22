@@ -18,14 +18,8 @@ from .models import PasswordHistory
 from django.contrib.auth.decorators import login_required
 
 
-
-
-
-
 def home(request):
     return render(request, 'home.html')  # דף הבית הכללי
-
-
 
 def login_user(request):
     if request.method == 'POST':
@@ -92,9 +86,6 @@ def register(request):
 
     return render(request, 'register.html')
 
-
-
-
 def user_home(request):
     # דף הבית של היוזר עם כפתור 'צור לקוח'
     return render(request, 'user_home.html')
@@ -109,9 +100,6 @@ def create_customer(request):
     else:
         form = CustomerForm()
     return render(request, 'create_customer.html', {'form': form})
-
-
-
 
 def forgot_password(request):
     if request.method == 'POST':
