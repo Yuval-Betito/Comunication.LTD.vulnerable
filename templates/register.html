@@ -25,11 +25,9 @@
             </div>
             <div class="button-container">
                 <!-- כפתור Register -->
-                <button type="submit">Register</button>
+                <a href="#" onclick="this.closest('form').submit();" class="btn">Register</a>
                 <!-- כפתור Back to Welcome -->
-                <a href="{% url 'home' %}">
-                    <button type="button">Back to Welcome</button>
-                </a>
+                <a href="{% url 'home' %}" class="btn">Back to Welcome</a>
             </div>
         </form>
     </div>

@@ -3,26 +3,24 @@
 {% block title %}User Home{% endblock %}
 
 {% block content %}
-    <div class="content-container">
+    <div class="form-container">
+        <!-- הכותרת -->
         <h1>Welcome to User Home</h1>
 
-        <!-- הצגת הודעות -->
-        {% if messages %}
-            <ul class="message-list">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
         <!-- כפתור יצירת לקוח -->
-        <div class="button-group">
-            <a href="{% url 'create_customer' %}" class="btn btn-primary">Create New Customer</a>
+        <div class="button-container">
+            <a href="{% url 'create_customer' %}" class="btn">Create New Customer</a>
         </div>
 
-        <!-- כפתור חזרה לדף הבית של המשתמש -->
-        <div class="button-group">
-            <a href="{% url 'home' %}" class="btn btn-secondary">Back To Welcome Page</a>
+        <!-- כפתור שינוי סיסמה -->
+        <div class="button-container">
+            <a href="{% url 'change_password' %}" class="btn">Change Password</a>
+        </div>
+
+        <!-- כפתור חזרה לדף הבית -->
+        <div class="button-container">
+            <a href="{% url 'home' %}" class="btn">Back To Welcome Page</a>
         </div>
     </div>
 {% endblock %}
+

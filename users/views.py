@@ -15,11 +15,16 @@ from django.urls import reverse
 import hashlib
 import os
 from .models import PasswordHistory
+from django.contrib.auth.decorators import login_required
+
+
+
 
 
 
 def home(request):
     return render(request, 'home.html')  # דף הבית הכללי
+
 
 
 def login_user(request):
@@ -49,7 +54,6 @@ def login_user(request):
         except User.DoesNotExist:
             messages.error(request, "User not found.")
     return render(request, 'login.html')
-
 
 
 def register(request):
@@ -171,3 +175,40 @@ def reset_password(request, token):
         return redirect('login')
 
     return render(request, 'reset_password.html')
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST['current_password']
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+
+        # בדיקת סיסמה נוכחית
+        if not request.user.check_password(current_password):
+            messages.error(request, "The current password is incorrect.")
+            return redirect('change_password')
+
+        # בדיקת התאמת סיסמאות
+        if new_password != confirm_password:
+            messages.error(request, "New passwords do not match.")
+            return redirect('change_password')
+
+        # בדיקת הסיסמה החדשה לפי כל הדרישות (כולל היסטוריה)
+        password_errors = validate_password(new_password, user=request.user)
+        if password_errors:
+            for error in password_errors:
+                messages.error(request, error)
+            return redirect('change_password')
+
+        # שמירת הסיסמה החדשה
+        request.user.set_password(new_password)
+        request.user.save()
+
+        # עדכון היסטוריית סיסמאות
+        from users.models import PasswordHistory
+        PasswordHistory.objects.create(user=request.user, password=hash_password(new_password))
+
+        messages.success(request, "Password changed successfully.")
+        return redirect('user_home')
+
+    return render(request, 'change_password.html')

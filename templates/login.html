@@ -17,15 +17,13 @@
             </div>
             <div class="button-container">
                 <!-- כפתור Login -->
-                <button type="submit">Login</button>
+                <a href="#" onclick="this.closest('form').submit();" class="btn">Login</a>
+
                 <!-- כפתור Forgot Password -->
-                <a href="{% url 'forgot_password' %}">
-                    <button type="button">Forgot Password?</button>
-                </a>
+                <a href="{% url 'forgot_password' %}" class="btn">Forgot Password?</a>
+
                 <!-- כפתור Back to Welcome -->
-                <a href="{% url 'home' %}">
-                    <button type="button">Back to Welcome</button>
-                </a>
+                <a href="{% url 'home' %}" class="btn">Back to Welcome</a>
             </div>
         </form>
     </div>
