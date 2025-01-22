@@ -1,1 +1,19 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Django
+*.sqlite3
 .env
+
+# Virtual Environments
+.venv/
+env/
+venv/
+
+# Logs
+*.log
+
+# PyCharm
+.idea/
