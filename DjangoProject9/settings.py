@@ -117,3 +117,5 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
+
+LOGIN_URL = '/login/'  # תואם לנתיב המוגדר ב-urls.py

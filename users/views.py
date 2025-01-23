@@ -86,10 +86,12 @@ def register(request):
 
     return render(request, 'register.html')
 
+@login_required
 def user_home(request):
     # דף הבית של היוזר עם כפתור 'צור לקוח'
     return render(request, 'user_home.html')
 
+@login_required
 def create_customer(request):
     if request.method == 'POST':
         form = CustomerForm(request.POST)

@@ -17,7 +17,7 @@
             </div>
             <div class="button-container">
                 <!-- כפתור Login -->
-                <a href="#" onclick="this.closest('form').submit();" class="btn">Login</a>
+                <button type="submit" class="btn">Login</button>
 
                 <!-- כפתור Forgot Password -->
                 <a href="{% url 'forgot_password' %}" class="btn">Forgot Password?</a>
@@ -28,3 +28,4 @@
         </form>
     </div>
 {% endblock %}
+
