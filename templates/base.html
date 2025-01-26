@@ -16,7 +16,7 @@
         {% if messages %}
             <div class="message-container">
                 {% for message in messages %}
-                    <div class="alert {{ message.tags|escape }}">{{ message|escape }}</div>
+                    <div class="alert {{ message.tags|safe }}">{{ message|safe }}</div>
                 {% endfor %}
             </div>
         {% endif %}
@@ -25,3 +25,7 @@
     </main>
 </body>
 </html>
+
+
+
+

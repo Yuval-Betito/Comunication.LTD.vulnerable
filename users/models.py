@@ -11,13 +11,12 @@ from datetime import timedelta
 from django.utils.timezone import now
 from django.core.mail import send_mail
 
-
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)  # הצפנת סיסמה
+        user.set_password(password)  # שימוש בפונקציה להגדיר סיסמה
         user.save(using=self._db)
         return user
 
@@ -28,23 +27,26 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    username = models.CharField(max_length=150, unique=True, default='default_username')
-    email = models.EmailField(unique=True)
-    password = models.BinaryField()
+    username = models.CharField(max_length=150, unique=True)  # ייחודי
+    email = models.EmailField(unique=True)  # ייחודי
+    password = models.CharField(max_length=128)  # שמירת סיסמה כטקסט גלוי
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     login_attempts = models.IntegerField(default=0)
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = 'username'  # השדה הראשי הוא username
+    REQUIRED_FIELDS = ['email']  # להשאיר email כשדה חובה
 
     def set_password(self, raw_password):
-        self.password = hash_password(raw_password)
+        # שמירת הסיסמה ללא הצפנה
+        self.password = raw_password
 
     def check_password(self, raw_password):
-        return check_password(raw_password, self.password)
+        # השוואה פשוטה בין סיסמה גולמית לסיסמה שנשמרה
+        return self.password == raw_password
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """
@@ -54,7 +56,6 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
-
 
 class PasswordHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -76,21 +77,13 @@ class LoginAttempts(models.Model):
 class Customer(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    customer_id = models.CharField(max_length=20, unique=True)
+    customer_id = models.CharField(max_length=25)
     phone_number = models.CharField(max_length=15)  # אם צריך להכליל קידומת
     email = models.EmailField(unique=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.customer_id}"
 
-    def clean(self):
-        """
-        Make sure that phone_number starts with '05' and is 10 digits long.
-        """
-        if not self.phone_number.startswith('05'):
-            raise ValidationError('Phone number must start with "05".')
-        if len(self.phone_number) != 10:
-            raise ValidationError('Phone number must be exactly 10 digits long.')
 
 class PasswordResetToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -6,16 +6,61 @@
 <div class="form-container">
     <h1>Create Customer</h1>
 
-    <!-- טופס יצירת לקוח -->
     <form method="POST" class="styled-form">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-group">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+        </div>
+        <div class="form-group">
+            <label for="customer_id">Customer ID:</label>
+            <input type="text" id="customer_id" name="customer_id" required>
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
         <button type="submit" class="btn">Add Customer</button>
     </form>
 
-    <!-- כפתור חזרה -->
-    <form action="{% url 'user_home' %}" method="get" class="styled-form">
-        <button type="submit" class="btn btn-secondary">Back to User Home</button>
-    </form>
+    {% if customer %}
+        <h2>Customer Created:</h2>
+        <p>First Name: {{ customer.first_name|safe }}</p> <!-- פגיע ל-XSS -->
+        <p>Last Name: {{ customer.last_name }}</p>
+        <p>Customer ID: {{ customer.customer_id }}</p>
+        <p>Phone: {{ customer.phone_number }}</p>
+        <p>Email: {{ customer.email }}</p>
+    {% endif %}
+
+    <!-- כפתור חזרה לדף הבית של המשתמש -->
+    <div class="button-container">
+        <a href="{% url 'user_home' %}" class="btn btn-secondary">Back to User Home</a>
+    </div>
 </div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

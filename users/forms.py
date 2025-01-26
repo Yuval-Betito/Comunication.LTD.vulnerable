@@ -2,19 +2,15 @@ from django import forms
 from .models import Customer
 
 
+from django import forms
+from .models import Customer
+
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['first_name', 'last_name', 'customer_id', 'phone_number', 'email']
 
-    def clean_phone_number(self):
-        phone_number = self.cleaned_data['phone_number']
-        if not phone_number.startswith('05'):
-            raise forms.ValidationError("Phone number must start with '05'.")
-        if len(phone_number) != 10:
-            raise forms.ValidationError("Phone number must be exactly 10 digits long.")
-        return phone_number
-
+    # הסרת הוולידציות כדי להדגים קוד פגיע
 
 class ForgotPasswordForm(forms.Form):
     email = forms.EmailField(label="Email")
