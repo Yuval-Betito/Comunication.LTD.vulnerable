@@ -1,14 +1,5 @@
 # users/views.py
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth import authenticate, login
-from datetime import datetime, timedelta
-from django.core.mail import send_mail
 from .models import PasswordResetToken, User
-from .forms import ForgotPasswordForm, CustomerForm
-from django.contrib.auth import get_user_model
-from .forms import ResetPasswordForm
 from utils.password_utils import validate_password, hash_password, is_password_unique, check_password
 from django.urls import reverse
 import hashlib
@@ -16,14 +7,14 @@ import os
 from .models import PasswordHistory
 from django.contrib.auth import login
 from users.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db import connection
-from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     return render(request, 'home.html')  # דף הבית הכללי
-
 
 def forgot_password(request):
     if request.method == 'POST':
@@ -157,13 +148,10 @@ def login_user(request):
     return render(request, 'login.html')
 
 # פונקציה להרשמת משתמשים (פגיעה ל-SQL Injection)
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.db import connection
-import base64  # אם את משתמשת בהאשטת סיסמאות באמצעות Base64
-
+from utils.password_utils import validate_password
 
 def register(request):
     if request.method == 'POST':
@@ -175,6 +163,13 @@ def register(request):
         # בדיקה אם הסיסמאות תואמות
         if password != confirm_password:
             messages.error(request, "Passwords do not match")
+            return redirect('register')
+
+        # בדיקות סיסמה לפי תנאי הקונפיגורציה
+        password_errors = validate_password(password)
+        if password_errors:
+            for error in password_errors:
+                messages.error(request, error)
             return redirect('register')
 
         # קוד פגיע ל-SQL Injection
@@ -207,6 +202,7 @@ def register(request):
                 return redirect('register')
 
     return render(request, 'register.html')
+
 
 
 
