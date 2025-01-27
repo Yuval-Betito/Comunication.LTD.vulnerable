@@ -245,6 +245,13 @@ def create_customer(request):
     # הצגת טופס ריק
     return render(request, 'create_customer.html')
 
+from django.shortcuts import render
+from .models import Customer
+
+@login_required
+def customer_list(request):
+    customers = Customer.objects.all()  # שליפת כל הלקוחות
+    return render(request, 'customer_list.html', {'customers': customers})
 
 
 
