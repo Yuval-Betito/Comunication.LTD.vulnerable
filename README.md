@@ -40,19 +40,6 @@ user = cursor.execute(query)
 - **Insecure Rendering**: User inputs are directly rendered without encoding or escaping, leading to XSS vulnerabilities.
 - **No CSRF Protection**: Forms are missing CSRF tokens, enabling Cross-Site Request Forgery attacks.
 
-## 📂 Project Structure
-```
-VulnerableCyberProject/
-├── README.md
-├── src/
-│   ├── insecure_views.py
-│   ├── vulnerable_forms.py
-│   └── models.py
-├── templates/
-│   ├── insecure_login.html
-│   ├── insecure_register.html
-│   └── vulnerable_feedback.html
-```
 
 ## 🚨 Warning
 This project is intended solely for educational purposes. **Do NOT deploy or use this application in production environments.**
